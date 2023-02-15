@@ -30,12 +30,12 @@ export default class Modal extends React.Component {
     return createPortal(
       <ModalBackdrop onClick={this.handleBackdropClick}>
         <ModalContent>
-          <ModalImg src={this.props.imgUrl} alt="" />
           <Icon
             className="fa fa-times"
             aria-hidden="true"
             onClick={() => this.props.onClose()}
           ></Icon>
+          <ModalImg src={this.props.imgUrl} alt="" />
         </ModalContent>
       </ModalBackdrop>,
       modalRoot

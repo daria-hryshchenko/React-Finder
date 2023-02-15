@@ -49,6 +49,9 @@ export const ModalImg = styled.img`
 `;
 
 export const Icon = styled.i`
-  font-size: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 34px;
   color: #fff;
 `;
