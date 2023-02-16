@@ -15,7 +15,7 @@ export class App extends Component {
     error: null,
     inputValue: '',
     page: 1,
-    status: '',
+    status: 'idle',
     loadMore: null,
     largeImageUrl: '',
     showModal: false,
@@ -34,11 +34,11 @@ export class App extends Component {
         .then(event =>
           this.setState(prevState => ({
             images: [...prevState.images, ...event.hits],
-            status: '',
             loadMore: 12 - event.hits.length,
           }))
         )
-        .catch(error => console.log(error));
+        .catch(error => console.log(error))
+        .finally(() => this.setState({ status: 'idle' }));
     }
   }
 
@@ -54,7 +54,6 @@ export class App extends Component {
   handleLoalMore = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
-      images: [...prevState.images, ...this.state.images],
     }));
   };
 
@@ -65,7 +64,7 @@ export class App extends Component {
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
-      showModal: !showModal,
+      showModal: false,
     }));
   };
 
@@ -78,7 +77,11 @@ export class App extends Component {
         <ImageGallery images={images} onClick={this.handleLargeImageUrl} />
         {status === 'loading' && <Loader />}
         {showModal && (
-          <Modal imgUrl={largeImageUrl} onClose={this.toggleModal} />
+          <Modal
+            imgUrl={largeImageUrl}
+            onClose={this.toggleModal}
+            status={status}
+          />
         )}
         {loadMore === 0 && <Button onClick={this.handleLoalMore} />}
       </Wrapper>
